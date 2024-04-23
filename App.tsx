@@ -18,6 +18,14 @@ import {
 } from 'react-native';
 
 import {
+  RecoilRoot,
+  atom,
+  selector,
+  useRecoilState,
+  useRecoilValue,
+} from 'recoil';
+
+import {
   Colors,
   DebugInstructions,
   Header,
@@ -33,6 +41,7 @@ function Section({children, title}: SectionProps): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
   return (
     <View style={styles.sectionContainer}>
+
       <Text
         style={[
           styles.sectionTitle,
@@ -64,6 +73,7 @@ function App(): React.JSX.Element {
 
   return (
     <SafeAreaView style={backgroundStyle}>
+    <RecoilRoot>
       <StatusBar
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
         backgroundColor={backgroundStyle.backgroundColor}
@@ -92,6 +102,7 @@ function App(): React.JSX.Element {
           <LearnMoreLinks />
         </View>
       </ScrollView>
+    </RecoilRoot>
     </SafeAreaView>
   );
 }
