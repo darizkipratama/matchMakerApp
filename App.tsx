@@ -33,6 +33,12 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
+import {
+  QueryClient,
+  QueryClientProvider,
+  useQuery,
+} from '@tanstack/react-query';
+
 import { NavigationContainer } from '@react-navigation/native';
 import Routes from "./src/navigator/Routes";
 import FeedPages from "./src/components/pages/FeedPages";
@@ -72,8 +78,6 @@ function Section({children, title}: SectionProps): React.JSX.Element {
 
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
-
-
   React.useEffect(() => {
       const init = async () => {
         // …do multiple sync or async tasks
@@ -86,19 +90,22 @@ function App(): React.JSX.Element {
         await BootSplash.hide({fade: true});
         console.log("BootSplash has been hidden successfully");
       });
-    }, []);
+  }, []);
 
-
+  const queryClient = new QueryClient()
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
+
   return (
     <NavigationContainer>
+        <QueryClientProvider client={queryClient}>
         <RecoilRoot>
             <Routes/>
         </RecoilRoot>
+        </QueryClientProvider>
     </NavigationContainer>
   );
 }
